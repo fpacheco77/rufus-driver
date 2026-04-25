@@ -2,14 +2,11 @@ FROM node:20-slim
 
 WORKDIR /app
 
-# Install only deps first for layer caching
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev --no-package-lock
 
-# Copy source
 COPY . .
 
-# Render / Fly / Railway inject PORT; default to 3000 for local
 ENV PORT=3000
 EXPOSE 3000
 
